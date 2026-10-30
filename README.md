@@ -29,9 +29,9 @@ O CIFAR-10 contém imagens distribuídas em dez classes:
 - Navio
 - Caminhão
 
-As métricas de avaliação do treinamento original não foram localizadas nos arquivos consultados. Por esse motivo, não são atribuídos ao modelo valores de acurácia ou outras métricas que ainda não tenham sido efetivamente calculadas.
+As métricas de avaliação do treinamento original não foram localizadas nos arquivos consultados. Entretanto, foi realizada uma avaliação do modelo utilizando o conjunto oficial de teste do CIFAR-10, composto por 10.000 imagens.
 
-Antes da entrega final, será necessário avaliar o modelo com um conjunto de teste adequado e registrar os resultados obtidos, conforme os requisitos da atividade.
+Os resultados dessa avaliação estão apresentados na seção 10 deste documento. Esses valores correspondem à avaliação atual do modelo e não devem ser confundidos com métricas do treinamento original.
 
 ## 3. Tecnologias utilizadas
 
@@ -100,11 +100,9 @@ Para executar o projeto, são necessários:
 Execute os comandos abaixo em um terminal:
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone https://github.com/Dora-bit767/ImageVision_API.git
 cd ImageVision_API
 ```
-
-Substitua `URL_DO_REPOSITORIO` pela URL pública real do repositório no GitHub.
 
 ### 5.3. Criar o ambiente virtual
 
@@ -130,7 +128,7 @@ python -m pip install -r requirements.txt
 
 ### 5.5. Iniciar a API
 
-Execute:
+Com o ambiente virtual ativado e as dependências instaladas, estando no diretório raiz do projeto, execute:
 
 ```powershell
 python -m uvicorn app.main:app --reload
@@ -234,7 +232,12 @@ A implementação contempla o tratamento de situações como:
 - Modelo indisponível para realizar a previsão.
 - Dados incompatíveis com o processamento esperado.
 
-Os códigos HTTP efetivamente retornados devem ser confirmados na implementação e nos testes finais. A documentação definitiva deverá distinguir corretamente erros de requisição, erros de validação e falhas internas.
+Os principais códigos HTTP utilizados pelo endpoint são:
+
+- `200`: previsão realizada com sucesso.
+- `400`: arquivo vazio, imagem inválida ou erro de valor durante a previsão.
+- `422`: tipo de arquivo incompatível ou falha na validação da requisição.
+- `503`: modelo indisponível ou erro de execução durante a previsão.
 
 ## 8. Arquitetura e ciclo de vida do modelo
 
@@ -270,11 +273,28 @@ Os testes verificam o funcionamento dos principais endpoints e o tratamento de s
 
 ## 10. Métricas de avaliação do modelo
 
-As métricas do treinamento original ainda não foram localizadas nos arquivos consultados.
+O modelo foi avaliado utilizando o conjunto oficial de teste do CIFAR-10, composto por 10.000 imagens.
 
-Por esse motivo, não são apresentados valores de acurácia, precisão, recall, F1-score ou outras métricas como se já tivessem sido calculados.
+As imagens foram normalizadas para valores entre 0 e 1, e as previsões foram convertidas em probabilidades por meio da função Softmax.
 
-Para atender ao requisito de avaliação do modelo, será necessário utilizar um conjunto de teste adequado, executar as previsões e calcular as métricas pertinentes à tarefa de classificação.
+### 10.1 Resultados da avaliação
+
+| Métrica | Resultado |
+|---|---:|
+| Acurácia | 67,96% |
+| Precisão macro | 68,36% |
+| Recall macro | 67,96% |
+| F1-score macro | 67,84% |
+
+### 10.2 Análise por classe
+
+A classe automóvel apresentou a maior precisão (84,76%), enquanto caminhão apresentou o maior recall (80,80%).
+
+A classe gato apresentou o menor F1-score (51,41%), indicando maior dificuldade de classificação.
+
+Os resultados demonstram que o modelo consegue classificar imagens nas dez categorias do CIFAR-10, mas ainda apresenta oportunidades de melhoria.
+
+**Observação:** as métricas apresentadas correspondem à avaliação atual do modelo no conjunto de teste. Elas não representam necessariamente os resultados obtidos durante o treinamento original.
 
 ### Resultados da avaliação
 
@@ -316,19 +336,22 @@ apresenta oportunidades de melhoria.
 
 ## 11. Controle de versão e organização do Git
 
-O controle de versão deverá seguir as orientações da atividade avaliativa.
+O projeto utiliza Git e GitHub para controle de versão e organização do desenvolvimento.
 
-A branch `main` deverá conter a versão final estável do projeto.
+Foram utilizadas duas branches principais:
 
-A branch `develop` deverá ser utilizada para consolidar as alterações durante o desenvolvimento. Branches de funcionalidades poderão ser criadas a partir de `develop` para organizar etapas específicas.
+- `main`: destinada a manter a versão estável do projeto.
+- `develop`: utilizada para organizar e consolidar as alterações durante o desenvolvimento.
 
-Os commits deverão apresentar mensagens claras e objetivas, descrevendo as alterações realizadas.
+As alterações realizadas na branch `develop` foram integradas à branch `main` por meio de merge.
 
-Antes da entrega, será necessário confirmar se as alterações foram integradas corretamente à branch `main` e se o repositório público contém todos os arquivos necessários para reproduzir a aplicação.
+O repositório possui as duas branches publicadas no GitHub, permitindo acompanhar a evolução do projeto e manter uma versão estável disponível.
+
+Os commits foram realizados com mensagens objetivas, descrevendo as alterações implementadas.
 
 ## 12. Demonstração em vídeo
 
-**Link do vídeo:** [INSERIR LINK DO GOOGLE DRIVE]
+**Link do vídeo:** Será disponibilizado após a gravação e publicação da demonstração no Google Drive.
 
 O vídeo de demonstração deverá ter duração máxima de 10 minutos e apresentar:
 
@@ -346,23 +369,21 @@ O compartilhamento do Google Drive deverá permitir que qualquer pessoa com o li
 
 ## 13. Repositório público
 
-**Link do GitHub:** [INSERIR URL PÚBLICA DO REPOSITÓRIO]
+**Link do GitHub:** https://github.com/Dora-bit767/ImageVision_API
 
-O repositório público deverá conter o código-fonte, o modelo necessário para execução, as dependências, os testes e a documentação.
+O repositório público contém o código-fonte da aplicação, o modelo CIFAR-10, as dependências, os testes automatizados e a documentação necessária para compreender e executar o projeto.
 
-Antes da publicação, será necessário verificar se todos os arquivos necessários estão presentes e se o código não depende de caminhos absolutos específicos da máquina de desenvolvimento.
+O projeto foi publicado no GitHub, com as branches `main` e `develop` disponíveis para consulta.
 
 ## 14. Melhorias futuras
 
-Entre as melhorias possíveis para o projeto estão:
+Entre as possibilidades de evolução do projeto estão:
 
-- Registrar as métricas reais de avaliação do modelo.
+- Aprimorar o desempenho do modelo de classificação, buscando reduzir os erros entre classes visualmente semelhantes.
 - Ampliar a cobertura dos testes automatizados.
-- Validar e documentar os códigos HTTP das situações previstas.
-- Revisar a validação de entradas e os esquemas de dados.
-- Aprimorar o tratamento de erros.
-- Avaliar o desempenho do modelo em imagens de teste.
-- Melhorar a configuração para execução em ambientes de produção.
+- Implementar recursos adicionais de monitoramento e registro de eventos da API.
+- Aprimorar a configuração para execução em ambientes de produção.
+- Avaliar estratégias para melhorar a eficiência e a escalabilidade da aplicação.
 
 ## 15. Considerações finais
 
@@ -372,5 +393,5 @@ A separação entre rotas, serviços e esquemas favorece a organização e a man
 
 A documentação, os testes automatizados e o controle de versão fazem parte do processo de desenvolvimento e entrega.
 
-A versão final da documentação deverá ser atualizada após a conclusão das verificações pendentes, incluindo as métricas de avaliação, o estado do modelo no endpoint de saúde e os links definitivos do repositório e da demonstração em vídeo.
+A documentação apresenta os resultados da avaliação do modelo, o funcionamento dos endpoints e a organização do controle de versão. Após a gravação da demonstração, o link do vídeo será acrescentado a este documento para completar as informações de entrega.
 

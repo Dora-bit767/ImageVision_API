@@ -21,3 +21,5 @@ htmlcov/
 # Arquivos do sistema
 .DS_Store
 Thumbs.db
+# Ambiente virtual Python
+venv/
