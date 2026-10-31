@@ -351,7 +351,7 @@ Os commits foram realizados com mensagens objetivas, descrevendo as alterações
 
 ## 12. Demonstração em vídeo
 
-**Link do vídeo:** Será disponibilizado após a gravação e publicação da demonstração no Google Drive.
+**Link do vídeo:** **Link do vídeo:** [Assistir à demonstração do ImageVision API](https://drive.google.com/file/d/16umnejZMTbkdlt9Ew8h6GSISF7tIp-d-/view?usp=sharing)
 
 O vídeo de demonstração deverá ter duração máxima de 10 minutos e apresentar:
 
